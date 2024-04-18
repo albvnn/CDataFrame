@@ -1,4 +1,5 @@
 #include "column.h"
+#include "sort.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -25,13 +26,13 @@ int insert_value(COLUMN* col, int value){
     if(col->TL >= col->TP) {
         col->TL = 0;
         free(col->data);
-        col->data = (int *)realloc(col->data, sizeof(int)*REALOC_SIZE);
+        col->data = (int *)realloc(col->data, sizeof(int));
         if (col->data == NULL) {
             return 0;
         }
     }
     if(col->data == NULL) {
-        col->data = (int *)malloc(sizeof(int)*REALOC_SIZE);
+        col->data = (int *)malloc(sizeof(int));
         if (col->data == NULL) {
             return 0;
         }
@@ -52,3 +53,4 @@ void print_col(COLUMN* col){
         printf("\n");
     }
 };
+

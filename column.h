@@ -1,7 +1,3 @@
-//
-// Created by alban on 17/04/2024.
-//
-
 #ifndef CDATAFRAME_COLUMN_H
 #define CDATAFRAME_COLUMN_H
 

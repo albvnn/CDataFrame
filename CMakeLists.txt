@@ -9,4 +9,8 @@ add_executable(CDataFrame
         main.c
         main.h
         column.h
-        column.c)
+        column.c
+        sort.h
+        sort.c
+        cdataframe.c
+        cdataframe.h)
