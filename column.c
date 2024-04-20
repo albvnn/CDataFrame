@@ -6,13 +6,6 @@
 
 #define REALOC_SIZE 256
 
-typedef struct Column {
-    char title[100];
-    int TP;
-    int TL;
-    int *data;
-}COLUMN;
-
 COLUMN *create_column(char* title) {
     COLUMN* column = (COLUMN *)malloc(sizeof(COLUMN));
     strcpy(column->title, title);
@@ -54,3 +47,57 @@ void print_col(COLUMN* col){
     }
 };
 
+int count_occ(COLUMN *col, int x) {
+    if (!col)
+        return 0;
+
+    int count = 0;
+    for (int i = 0; i < col->TL; i++) {
+        if (col->data[i] == x)
+            count++;
+    }
+    return count;
+}
+
+int positionval(COLUMN *col, int x) {
+    if (!col || x < 0 || x >= col->TL)
+        return -1; // meaning a error
+
+    return col->data[x];
+}
+
+int valuegreater(COLUMN *col, int x) {
+    if (!col)
+        return 0;
+
+    int count = 0;
+    for (int i = 0; i < col->TL; i++) {
+        if (col->data[i] > x)
+            count++;
+    }
+    return count;
+}
+
+int valueless(COLUMN *col, int x) {
+    if (!col)
+        return 0;
+
+    int count = 0;
+    for (int i = 0; i < col->TL; i++) {
+        if (col->data[i] < x)
+            count++;
+    }
+    return count;
+}
+
+int valuequal(COLUMN *col, int x) {
+    if (!col)
+        return 0;
+
+    int count = 0;
+    for (int i = 0; i < col->TL; i++) {
+        if (col->data[i] == x)
+            count++;
+    }
+    return count;
+}
