@@ -7,7 +7,6 @@ include_directories(.)
 
 add_executable(CDataFrame
         main.c
-        main.h
         column.h
         column.c
         sort.h

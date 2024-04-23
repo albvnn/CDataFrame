@@ -7,18 +7,31 @@
 // need to comment the code
 
 int main() {
-    COLUMN *mycol = create_column("My column");
+    COLUMN *mycol = create_column("Column 0");
     insert_value(mycol, 52);
     insert_value(mycol, 44);
     insert_value(mycol, 15);
-    COLUMN *mycol2 = create_column("My column");
+    insert_value(mycol, 15);
+    COLUMN *mycol2 = create_column("Column 1");
     insert_value(mycol2, 1);
     insert_value(mycol2, 2);
     insert_value(mycol2, 3);
-    COLUMN *mycol3 = create_column("My column");
+    insert_value(mycol2, 15);
+    COLUMN *mycol3 = create_column("Column 2");
     insert_value(mycol3, 0);
     insert_value(mycol3, 0);
     insert_value(mycol3, 1);
+    insert_value(mycol3, 15);
+    COLUMN *mycol4 = create_column("Column 3");
+    insert_value(mycol4, 6);
+    insert_value(mycol4, 6);
+    insert_value(mycol4, 6);
+    insert_value(mycol4, 15);
+    COLUMN *mycol5 = create_column("Column 4");
+    insert_value(mycol5, 7);
+    insert_value(mycol5, 5);
+    insert_value(mycol5, 42);
+    insert_value(mycol5, 15);
 
     printf("Occurrences of 44: %d\n", count_occ(mycol, 44));
     printf("Value at position 1: %d\n", positionval(mycol, 1));
@@ -26,12 +39,19 @@ int main() {
     printf("Values less than 30: %d\n", valueless(mycol, 30));
     printf("Values equal to 44: %d\n", valuequal(mycol, 44));
 
-    CDATAFRAME *cdf = create_cdataframe(3);
+    CDATAFRAME *cdf = create_cdataframe(5);
     printf("%d", add_column_cdf(cdf, mycol));
     printf("%d", add_column_cdf(cdf, mycol2));
     printf("%d", add_column_cdf(cdf, mycol3));
+    printf("%d", add_column_cdf(cdf, mycol4));
+    printf("%d", add_column_cdf(cdf, mycol5));
     printf("\n");
+    print_rows_cdf(cdf, 2, 2);
+    print_cols_cdf(cdf, 1, 2);
     print_cdf(cdf);
+    print_columns_title(cdf);
+    rename_column_cdf(cdf, 2, "Testtt");
+    print_columns_title(cdf);
 
     return 0;
 }

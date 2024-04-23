@@ -21,6 +21,17 @@ void delete_cdf(CDATAFRAME **cdf){
     free(*cdf);
 };
 
+void rename_column_cdf(CDATAFRAME *cdf, int col_num, char new_title[]) {
+    lnode* col_node = get_first_node(cdf->list_cdf);
+    COLUMN* col = col_node->data;
+    for (int i = 0; i < col_num; i++){
+        col_node = get_next_node(cdf->list_cdf, col_node);
+    };
+    col = col_node->data;
+    col->title;
+    strcpy(col->title, new_title);
+};
+
 int add_column_cdf(CDATAFRAME *cdf, COLUMN *col){
     if(cdf->TL >= cdf->TP){
         printf("The CDataFrame is full !");
@@ -47,17 +58,90 @@ void delete_column_cdf(CDATAFRAME *cdf, char *col_name){
     }
 };
 
-int get_cdataframe_cols_size(CDATAFRAME *cdf){
+int add_row_cdf(CDATAFRAME *cdf, int row[cdf->TL], int position) {
+    //a faire
+    return 0;
+};
+
+void delete_row_cdf(CDATAFRAME *cdf, int position) {
+    //a faire
+};
+
+int get_cols_number_cdf(CDATAFRAME *cdf){
     return cdf->TL;
+};
+
+int get_rows_number_cdf(CDATAFRAME *cdf){
+    lnode* col_node = get_first_node(cdf->list_cdf);
+    COLUMN* col = col_node->data;
+    return col->TL;
+};
+
+void print_rows_cdf(CDATAFRAME *cdf, int start, int end){
+    lnode* col_node;
+    COLUMN* col;
+    for (int j = start; j <= end; j++) {
+        printf("[%d] ", j);
+        col_node = get_first_node(cdf->list_cdf);
+        for (int i = 0; i < cdf->TL; i++) {
+            col = col_node->data;
+            if (0 <= col->data[j] && col->data[j] <= 9) {
+                printf(" %d  ", col->data[j]);
+            } else {
+                printf("%d  ", col->data[j]);
+            };
+            col_node = get_next_node(cdf->list_cdf, col_node);
+        };
+        printf("\n");
+    };
+};
+
+void print_cols_cdf(CDATAFRAME *cdf, int start, int end) {
+    COLUMN* col_list[end-start];
+    lnode* col_node = get_first_node(cdf->list_cdf);
+    COLUMN* col = col_node->data;
+    int number_rows = get_rows_number_cdf(cdf);
+    for (int k = start; k <= end; k++){
+        printf("[%d] ", k);
+    }
+    printf("\n");
+    for (int i = 0; i < start; i++){
+        col_node = get_next_node(cdf->list_cdf, col_node);
+    }
+    col = col_node->data;
+    for (int z = 0; z <= end-start; z++){
+        col_list[z] = col;
+        col_node = get_next_node(cdf->list_cdf, col_node);
+        col = col_node->data;
+    }
+    for (int y = 0; y < number_rows; y++){
+        for (int j = 0; j <= end-start; j++) {
+            printf(" %d ", col_list[j]->data[y]);
+        };
+        printf("\n");
+    };
+};
+
+void print_columns_title(CDATAFRAME *cdf){
+    lnode* col_node = get_first_node(cdf->list_cdf);
+    COLUMN* col = col_node->data;
+    for (int i = 0; i < cdf->TL; i++){
+        printf("[%d] %s", i, col->title);
+        if (i < cdf->TL - 1) {
+            col_node = get_next_node(cdf->list_cdf, col_node);
+            col = col_node->data;
+        };
+        printf("\n");
+    };
 };
 
 void print_cdf(CDATAFRAME *cdf){
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col = col_node->data;
-    for (int i = 0; i < cdf->TL; i++) {
-        print_col(col);
-        printf("-----------------\n");
-        col_node = get_next_node(cdf->list_cdf, col_node);
-        col = col_node->data;
+    printf("    ");
+    for (int j = 0; j < cdf->TL; j++) {
+        printf("[%d] ", j);
     }
+    printf("\n");
+    print_rows_cdf(cdf, 0, col->TL - 1);
 };
