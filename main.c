@@ -11,7 +11,7 @@ int main() {
     insert_value(mycol, 52);
     insert_value(mycol, 44);
     insert_value(mycol, 15);
-    insert_value(mycol, 15);
+    insert_value(mycol, 12);
     COLUMN *mycol2 = create_column("Column 1");
     insert_value(mycol2, 1);
     insert_value(mycol2, 2);
@@ -33,11 +33,15 @@ int main() {
     insert_value(mycol5, 42);
     insert_value(mycol5, 15);
 
+
+    /*
+
     printf("Occurrences of 44: %d\n", count_occ(mycol, 44));
     printf("Value at position 1: %d\n", positionval(mycol, 1));
     printf("Values greater than 20: %d\n", valuegreater(mycol, 20));
     printf("Values less than 30: %d\n", valueless(mycol, 30));
     printf("Values equal to 44: %d\n", valuequal(mycol, 44));
+    */
 
     CDATAFRAME *cdf = create_cdataframe(5);
     printf("%d", add_column_cdf(cdf, mycol));
@@ -46,12 +50,32 @@ int main() {
     printf("%d", add_column_cdf(cdf, mycol4));
     printf("%d", add_column_cdf(cdf, mycol5));
     printf("\n");
+
+    /*
     print_rows_cdf(cdf, 2, 2);
     print_cols_cdf(cdf, 1, 2);
     print_cdf(cdf);
     print_columns_title(cdf);
     rename_column_cdf(cdf, 2, "Testtt");
     print_columns_title(cdf);
+
+
+    print_cdf(cdf);
+    int tab[5] = {1,2,3,4,5};
+    add_row_cdf(cdf, tab, 2);
+    print_cdf(cdf);
+    delete_row_cdf(cdf, 2);
+    print_cdf(cdf);
+
+
+    print_cdf(cdf);
+    search_value_cdf(cdf, 1000);
+
+
+    print_cdf(cdf);
+    access_and_replace_value_by_pos(cdf, 20, 1, 3);
+    print_cdf(cdf);
+    */
 
     return 0;
 }
