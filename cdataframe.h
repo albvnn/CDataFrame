@@ -40,4 +40,8 @@ void print_cols_cdf(CDATAFRAME *cdf, int start, int end);
 
 void print_columns_title(CDATAFRAME *cdf);
 
+CDATAFRAME* load_from_csv(const char *file_name, int size_col);
+
+void save_into_csv(CDATAFRAME *cdf, char *file_name);
+
 #endif //CDATAFRAME_CDATAFRAME_H

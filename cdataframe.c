@@ -35,8 +35,8 @@ void rename_column_cdf(CDATAFRAME *cdf, int col_num, char new_title[]) {
 int add_column_cdf(CDATAFRAME *cdf, COLUMN *col){
     if(cdf->TL >= cdf->TP){
         printf("The CDataFrame is full !");
-        return 1;
-    }
+        return 0;
+    };
     if(cdf->TL == 0){
         lst_insert_head(cdf->list_cdf, lst_create_lnode(col));
         cdf->TL++;
@@ -200,4 +200,74 @@ void print_cdf(CDATAFRAME *cdf){
     }
     printf("\n");
     print_rows_cdf(cdf, 0, col->TL - 1);
+};
+
+CDATAFRAME* load_from_csv(const char *file_name, int size_col){
+    FILE* f = fopen(file_name, "r");
+    char line[1000];
+    char *data;
+    int line_array[size_col];
+    int data_int;
+    int row = 0;
+    int i;
+    CDATAFRAME* cdf = create_cdataframe(size_col);
+
+    if (f == NULL){
+        printf("Error: could not open file (%s)\n", strerror(errno));
+        exit(-1);
+    };
+
+    COLUMN* col;
+    for (int j = 0; j < size_col; j++){
+        col = create_column("Column");
+        add_column_cdf(cdf, col);
+    };
+
+
+    while (fgets(line, sizeof(line),f)){
+
+        data = strtok(line, ";");
+        sscanf(data, "%d", &data_int);
+        line_array[0] = data_int;
+
+
+        for (i = 1; i < size_col; i++){
+            data = strtok(NULL, ";");
+            sscanf(data, "%d", &data_int);
+            line_array[i] = data_int;
+        };
+
+        line_array[i] = data_int;
+
+        add_row_cdf(cdf, line_array, row);
+        row++;
+    };
+    fclose(f);
+    return cdf;
+};
+
+void save_into_csv(CDATAFRAME *cdf, char *file_name){
+    FILE* f = fopen(file_name, "w+");
+    int nb_row = get_rows_number_cdf(cdf);
+
+    if (f == NULL){
+        printf("Error: could not open file (%s)\n", strerror(errno));
+        exit(-1);
+    };
+
+
+    for (int j = 0; j < nb_row; j++) {
+        lnode* col_node = get_first_node(cdf->list_cdf);
+        COLUMN* col;
+
+        for (int i = 0; i < cdf->TL - 1; i++) {
+            col = col_node->data;
+            fprintf(f, "%d;", col->data[j]);
+            col_node = get_next_node(cdf->list_cdf, col_node);
+        };
+
+        col = col_node->data;
+        fprintf(f, "%d", col->data[j]);
+        fprintf(f, "\n");
+    };
 };

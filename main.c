@@ -75,6 +75,13 @@ int main() {
     print_cdf(cdf);
     access_and_replace_value_by_pos(cdf, 20, 1, 3);
     print_cdf(cdf);
+
+    CDATAFRAME *cdf = load_from_csv("C:\\Users\\alban\\CLionProjects\\CDataFrame\\test_file_csv.csv",6);
+    print_cdf(cdf);
+
+
+    print_cdf(cdf);
+    save_into_csv(cdf, "Test.csv");
     */
 
     return 0;
