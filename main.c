@@ -33,7 +33,9 @@ int main() {
     insert_value(mycol5, 42);
     insert_value(mycol5, 15);
 
-
+    int values[] = {1, 2, 3, 4, 5};
+    char title[] = "MyColumn";
+    int size = sizeof(values) / sizeof(values[0]);
     /*
 
     printf("Occurrences of 44: %d\n", count_occ(mycol, 44));

@@ -15,6 +15,46 @@ CDATAFRAME *create_cdataframe(int size){
     return cdf;
 };
 
+void fill_user(CDATAFRAME *cdf) {
+    if (!cdf)  //si rien
+        return;
+
+    char title[100];
+    int size, value;
+
+    printf("Enter the size of the column: ");
+    scanf("%d", &size);
+    getchar(); // enlève l'espace
+
+    printf("Enter the title of the column: ");
+    fgets(title, 100, stdin);
+    title[strcspn(title, "\n")] = 0; // Removing the newline character
+
+    COLUMN *col = create_column(title);
+
+    for (int i = 0; i < size; i++) {
+        printf("Enter value for row %d: ", i);
+        scanf("%d", &value);
+        insert_value(col, value);
+    }
+
+    lst_insert_tail(cdf->list_cdf, lst_create_lnode(col));
+}
+
+void fill_hard(CDATAFRAME *cdf, int size, char *title, int *values) {
+    if (!cdf || size <= 0 || !title || !values)
+        return; //si rien
+
+    COLUMN *col = create_column(title); // créer la colonne
+
+    for (int i = 0; i < size; i++) {
+        insert_value(col, values[i]); // insérer les valeurs normalement c'est bon
+    }
+
+    lst_insert_tail(cdf->list_cdf, lst_create_lnode(col));
+}
+
+
 void delete_cdf(CDATAFRAME **cdf){
     lst_erase((*cdf)->list_cdf);
     lst_delete_list((*cdf)->list_cdf);
