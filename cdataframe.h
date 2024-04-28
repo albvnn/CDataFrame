@@ -12,6 +12,10 @@ typedef struct CDataFrame {
 
 CDATAFRAME *create_cdataframe(int size);
 
+void fill_user(CDATAFRAME *cdf);
+
+void fill_hard(CDATAFRAME *cdf, int size, char *title, int *values);
+
 int add_column_cdf(CDATAFRAME *cdf, COLUMN *col);
 
 void delete_column_cdf(CDATAFRAME *cdf, char *col_name);

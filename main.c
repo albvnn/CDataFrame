@@ -7,6 +7,8 @@
 // need to comment the code
 
 int main() {
+
+
     COLUMN *mycol = create_column("Column 0");
     insert_value(mycol, 52);
     insert_value(mycol, 44);
@@ -33,9 +35,8 @@ int main() {
     insert_value(mycol5, 42);
     insert_value(mycol5, 15);
 
-    int values[] = {1, 2, 3, 4, 5};
-    char title[] = "MyColumn";
-    int size = sizeof(values) / sizeof(values[0]);
+
+
     /*
 
     printf("Occurrences of 44: %d\n", count_occ(mycol, 44));
@@ -45,6 +46,7 @@ int main() {
     printf("Values equal to 44: %d\n", valuequal(mycol, 44));
     */
 
+    /*
     CDATAFRAME *cdf = create_cdataframe(5);
     printf("%d", add_column_cdf(cdf, mycol));
     printf("%d", add_column_cdf(cdf, mycol2));
@@ -52,8 +54,23 @@ int main() {
     printf("%d", add_column_cdf(cdf, mycol4));
     printf("%d", add_column_cdf(cdf, mycol5));
     printf("\n");
+     */
 
-    /*
+
+    CDATAFRAME *cdf = create_cdataframe(10); // Creating a CDATAFRAME object with a maximum of 10 columns
+
+    printf("Testing fill_user:\n");
+    fill_user(cdf); // Testing fill_user function
+    print_cdf(cdf); // Printing the CDATAFRAME to see the filled data
+
+    printf("\nTesting fill_hard:\n");
+    int values[] = {10, 20, 30, 40, 50}; // Example array of values
+    fill_hard(cdf, 5, "Test Column", values); // Testing fill_hard function
+    print_cdf(cdf); // Printing the CDATAFRAME to see the filled data
+
+    delete_cdf(&cdf);
+
+       /*
     print_rows_cdf(cdf, 2, 2);
     print_cols_cdf(cdf, 1, 2);
     print_cdf(cdf);
