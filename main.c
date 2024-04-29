@@ -46,7 +46,7 @@ int main() {
     printf("Values equal to 44: %d\n", valuequal(mycol, 44));
     */
 
-    /*
+/*
     CDATAFRAME *cdf = create_cdataframe(5);
     printf("%d", add_column_cdf(cdf, mycol));
     printf("%d", add_column_cdf(cdf, mycol2));
@@ -54,22 +54,21 @@ int main() {
     printf("%d", add_column_cdf(cdf, mycol4));
     printf("%d", add_column_cdf(cdf, mycol5));
     printf("\n");
-     */
+    print_cdf(cdf);
+ */
 
 
-    CDATAFRAME *cdf = create_cdataframe(10); // Creating a CDATAFRAME object with a maximum of 10 columns
+    CDATAFRAME *cdf = create_cdataframe(4); // Creating a CDATAFRAME object with a maximum of 10 columns
 
     printf("Testing fill_user:\n");
-    fill_user(cdf); // Testing fill_user function
-    print_cdf(cdf); // Printing the CDATAFRAME to see the filled data
+    fill_user(cdf);
+    print_cdf(cdf); 
 
     printf("\nTesting fill_hard:\n");
-    int values[] = {10, 20, 30, 40, 50}; // Example array of values
-    fill_hard(cdf, 5, "Test Column", values); // Testing fill_hard function
-    print_cdf(cdf); // Printing the CDATAFRAME to see the filled data
+    int values[] = {10, 20, 30, 40, 50};
+    fill_hard(cdf, 5, "Test Column", values); //
 
-    delete_cdf(&cdf);
-
+    print_columns_title(cdf);
        /*
     print_rows_cdf(cdf, 2, 2);
     print_cols_cdf(cdf, 1, 2);

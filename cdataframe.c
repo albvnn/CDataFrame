@@ -311,3 +311,44 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name){
         fprintf(f, "\n");
     };
 };
+void cells_equal(CDATAFRAME *cdf, int x)
+{
+    lnode* col_node = get_first_node(cdf->list_cdf);
+    COLUMN* col;
+    int count;
+    for (int i = 0; i < cdf->TL; i++)
+    {
+        col = col_node->data;
+        count = count_occ(col, x);
+        printf("Column %d: Number of cells equal to %d: %d\n", i, x, count);
+        col_node = get_next_node(cdf->list_cdf, col_node);
+    }
+}
+
+void cells_greater(CDATAFRAME *cdf, int x)
+{
+    lnode* col_node = get_first_node(cdf->list_cdf);
+    COLUMN* col;
+    int count;
+    for (int i = 0; i < cdf->TL; i++)
+    {
+        col = col_node->data;
+        count = valuegreater(col, x);
+        printf("Column %d: Number of cells greater than %d: %d\n", i, x, count);
+        col_node = get_next_node(cdf->list_cdf, col_node);
+    }
+}
+
+void cells_lesser(CDATAFRAME *cdf, int x)
+{
+    lnode* col_node = get_first_node(cdf->list_cdf);
+    COLUMN* col;
+    int count;
+    for (int i = 0; i < cdf->TL; i++)
+    {
+        col = col_node->data;
+        count = valueless(col, x);
+        printf("Column %d: Number of cells less than %d: %d\n", i, x, count);
+        col_node = get_next_node(cdf->list_cdf, col_node);
+    }
+}
