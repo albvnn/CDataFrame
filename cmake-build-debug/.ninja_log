@@ -1,7 +1,0 @@
-# ninja log v5
-15	362	7359355871682807	CMakeFiles/CDataFrame.dir/sort.c.obj	d3ecad8de7c086c3
-6	560	7360101131028996	CMakeFiles/CDataFrame.dir/main.c.obj	229d811d14959ea9
-29	562	7360101131028996	CMakeFiles/CDataFrame.dir/column.c.obj	c892868deb13b71f
-50	558	7360101131049001	CMakeFiles/CDataFrame.dir/cdataframe.c.obj	654f71e446432211
-2	94	7359356415788112	CMakeFiles/CDataFrame.dir/double-linked-list.c.obj	88ff93a06fb039a8
-562	1224	7360101137642840	CDataFrame.exe	192139351e0655e2
