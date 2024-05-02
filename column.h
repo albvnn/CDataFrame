@@ -6,6 +6,16 @@ typedef struct Column {
     int TP;
     int TL;
     int *data;
+    long long *index;
+// index valid
+// 0 : no index
+// -1 : invalid index
+// 1 : valid index
+    int valid_index;
+// direction de tri Ascendant ou Déscendant
+// 0 : ASC
+// 1 : DESC
+    int sort_dir;
 }COLUMN;
 
 COLUMN *create_column(char* title);
@@ -29,6 +39,12 @@ int valuegreater(COLUMN *col, int x);
 int valueless(COLUMN *col, int x);
 
 int valuequal(COLUMN *col, int x);
+
+void erase_index(COLUMN *col);
+
+int check_index(COLUMN *col);
+
+void update_index(COLUMN *col);
 
 #endif //CDATAFRAME_COLUMN_H
 

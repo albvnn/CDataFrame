@@ -1,4 +1,0 @@
-#ifndef CDATAFRAME_MAIN_H
-#define CDATAFRAME_MAIN_H
-
-#endif //CDATAFRAME_MAIN_H
