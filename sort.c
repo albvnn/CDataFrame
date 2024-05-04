@@ -56,3 +56,40 @@ void quickSort(int tab[], long long *index, int left, int right) {
         quickSort(tab, index, pi + 1, right);
     }
 }
+
+void reverseArray(long long *arr, int size) {
+    int start = 0;
+    int end = size - 1;
+
+    while (start < end) {
+        // Swap elements
+        swaplong(&arr[start], &arr[end]);
+
+        // Move pointers
+        start++;
+        end--;
+    }
+}
+
+int binarySearch(int *arr, int size, int value) {
+    int low = 0;
+    int high = size - 1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        // Check if the middle element is the value we're searching for
+        if (arr[mid] == value) {
+            return mid; // Value found
+        }
+            // If the value is less than the middle element, search in the left half
+        else if (arr[mid] > value) {
+            high = mid - 1;
+        }
+            // If the value is greater than the middle element, search in the right half
+        else {
+            low = mid + 1;
+        }
+    }
+    return -1; // Value not found
+}

@@ -11,4 +11,8 @@ int partition(int tab[], long long *index, int left, int right);
 
 void quickSort(int tab[], long long *index, int left, int right);
 
+void reverseArray(long long *arr, int size);
+
+int binarySearch(int *arr, int size, int value);
+
 #endif //CDATAFRAME_SORT_H

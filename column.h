@@ -46,5 +46,11 @@ int check_index(COLUMN *col);
 
 void update_index(COLUMN *col);
 
+void sort(COLUMN* col, int sort_dir);
+
+void print_col_by_index(COLUMN *col);
+
+int search_value_in_column(COLUMN *col, int val);
+
 #endif //CDATAFRAME_COLUMN_H
 

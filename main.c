@@ -7,7 +7,6 @@
 // need to comment the code
 
 int main() {
-
     COLUMN *mycol = create_column("Column 0");
     insert_value(mycol, 52);
     insert_value(mycol, 44);
@@ -36,12 +35,12 @@ int main() {
 
 
 
+
     printf("Occurrences of 44: %d\n", count_occ(mycol, 44));
     printf("Value at position 1: %d\n", positionval(mycol, 1));
     printf("Values greater than 20: %d\n", valuegreater(mycol, 20));
     printf("Values less than 30: %d\n", valueless(mycol, 30));
     printf("Values equal to 44: %d\n", valuequal(mycol, 44));
-
 
 
     CDATAFRAME *cdf = create_cdataframe(5);
@@ -77,26 +76,21 @@ int main() {
     access_and_replace_value_by_pos(cdf, 20, 1, 3);
     print_cdf(cdf);
 
-    /*
+
     CDATAFRAME *cdff = load_from_csv("C:\\Users\\alban\\CLionProjects\\CDataFrame\\test_file_csv.csv",6);
     print_cdf(cdff);
-    */
 
 
     print_cdf(cdf);
     save_into_csv(cdf, "Test.csv");
 
 
-
     print_col(mycol);
     sort(mycol, 0);
-    printf("-----------------\n");
-    print_col_by_index(mycol);
-    printf("-----------------\n");
-    insert_value(mycol, 13);
-    sort(mycol, 0);
     print_col_by_index(mycol);
 
+    sort(mycol, 0);
+    search_value_in_column(mycol, 44);
 
 
 

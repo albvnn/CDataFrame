@@ -189,11 +189,19 @@ void sort(COLUMN* col, int sort_dir){
     if (col->valid_index == 0) {
         quickSort(data_array, col->index, 0, col->TL - 1);
         col->valid_index = 1;
+        if (sort_dir == 1) {
+            col->sort_dir = 1;
+            reverseArray(col->index, col->TL);
+        }
         return;
     }
     if (col->valid_index == -1) {
         insertionSort(data_array, col->index, col->TL);
         col->valid_index = 1;
+        if (sort_dir == 1) {
+            col->sort_dir = 1;
+            reverseArray(col->index, col->TL);
+        }
         return;
     } else {
         printf("Unvalid index (%d)", col->valid_index);
@@ -210,6 +218,26 @@ void print_col_by_index(COLUMN *col){
 
 
 
-int search_value_in_column(COLUMN *col, void *val){
-    //dichotomous search
+int search_value_in_column(COLUMN *col, int val){
+    if (col->valid_index == -1 || col->valid_index == 0 || col->sort_dir == 1) {
+        printf("Column not sorted !");
+        return -1;
+    }
+
+    int data_array[col->TL];
+    int result;
+
+    for (int i = 0; i < col->TL; i++){
+        data_array[i] = col->data[col->index[i]];
+    };
+
+    result = binarySearch(data_array, col->TL, val);
+    if (binarySearch(data_array, col->TL, val) == -1){
+        printf("Value not found");
+        return 0;
+    } else {
+        printf("Value found ! %d | index : %lld", data_array[result], col->index[result]);
+        return 1;
+    }
+
 }

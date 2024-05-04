@@ -102,7 +102,6 @@ void delete_column_cdf(CDATAFRAME *cdf, char *col_name){
 int add_row_cdf(CDATAFRAME *cdf, int row[cdf->TL], int position) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
-    int i;
     for (int j = 0; j < cdf->TL; j++) {
         col = col_node->data;
         if (insert_value_at_position(col, row[j], position) == 0)
@@ -246,42 +245,39 @@ CDATAFRAME* load_from_csv(const char *file_name, int size_col){
     FILE* f = fopen(file_name, "r");
     char line[1000];
     char *data;
-    int line_array[size_col];
+    int col_array[size_col][1000];
     int data_int;
     int row = 0;
-    int i;
+    int restart = ftell(f);
     CDATAFRAME* cdf = create_cdataframe(size_col);
+    COLUMN* col;
 
     if (f == NULL){
         printf("Error: could not open file (%s)\n", strerror(errno));
         exit(-1);
     };
 
-    COLUMN* col;
+    while(fgets(line, 1000, f)){
+        data = strtok(line, ";");
+        sscanf(data, "%d", &data_int);
+        col_array[0][row] = data_int;
+
+        for (int i = 1; i <= size_col; i++){
+            data = strtok(NULL, ";");
+            sscanf(data, "%d", &data_int);
+            col_array[i][row] = data_int;
+        }
+        row++;
+    }
+
     for (int j = 0; j < size_col; j++){
         col = create_column("Column");
+        for (int k = 0; k < row; k++){
+            insert_value(col, col_array[j][k]);
+        }
         add_column_cdf(cdf, col);
     };
 
-
-    while (fgets(line, sizeof(line),f)){
-
-        data = strtok(line, ";");
-        sscanf(data, "%d", &data_int);
-        line_array[0] = data_int;
-
-
-        for (i = 1; i < size_col; i++){
-            data = strtok(NULL, ";");
-            sscanf(data, "%d", &data_int);
-            line_array[i] = data_int;
-        };
-
-        line_array[i] = data_int;
-
-        add_row_cdf(cdf, line_array, row);
-        row++;
-    };
     fclose(f);
     return cdf;
 };
