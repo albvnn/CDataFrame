@@ -107,18 +107,25 @@ void MenuDisplaying(CDATAFRAME* cdf, list* cdfs, int nb_cdf) {
                 MenuDisplaying(cdf, cdfs, nb_cdf);
                 break;
             case 2:
-                // Print Rows
-                printf("You chose to print Rows.\n");
+                printf("Enter the first row to display :");
+                int first, last;
+                scanf("%d", &first);
+                printf("Enter the last row to display :");
+                scanf("%d", &last);
+                print_rows_cdf(cdf, first, last);
                 MenuDisplaying(cdf, cdfs, nb_cdf);
                 break;
             case 3:
-                // Print Columns
-                printf("You chose to print Columns.\n");
+                printf("Enter the first column to display :");
+                int first_col, last_col;
+                scanf("%d", &first_col);
+                printf("Enter the last column to display :");
+                scanf("%d", &last_col);
+                print_cols_cdf(cdf, first_col, last_col);
                 MenuDisplaying(cdf, cdfs, nb_cdf);
                 break;
             case 4:
-                // Print Column Titles
-                printf("You chose to print Column Titles.\n");
+                print_columns_title(cdf);
                 MenuDisplaying(cdf, cdfs, nb_cdf);
                 break;
             case 5:
@@ -139,44 +146,69 @@ void MenuUsualOperations(CDATAFRAME* cdf, list* cdfs, int nb_cdf) {
                 "     #                      Usual Operations Menu                            #\n"
                 "     #  CDataFrame selected : CDataFrame %d                                  #\n"
                 "     #                                                                       #\n"
-                "     #  1- Delete Row                                                        #\n"
-                "     #  2- Delete Column                                                     #\n"
-                "     #  3- Access and Replace Value                                          #\n"
-                "     #  4- Search Value                                                      #\n"
-                "     #  5- Back                                                              #\n"
+                "     #  1- Add a row of values to the CDataframe                             #\n"
+                "     #  2- Delete a row of values from the CDataframe                        #\n"
+                "     #  3- Delete a column from the CDataframe                               #\n"
+                "     #  4- Rename the title of a column in the CDataframe                    #\n"
+                "     #  5- Access/replace value in a cell of the CDataframe using its pos    #\n"
+                "     #  6- Back                                                              #\n"
                 "     #########################################################################\n", nb_cdf
         );
         printf("Enter your choice: ");
         scanf("%d", &choice);
         switch(choice) {
             case 1:
-                // Delete Row
-                printf("You chose to delete a row.\n");
+                printf("Enter the array wanted (123456) then the size (6) then the position (3):");
+                char array_str[100];
+                int size, position;
+                scanf("%99s", array_str);
+                scanf("%d", &size);
+                scanf("%d", &position);
+                int* array = string_to_int_array(array_str, &size);
+                add_row_cdf(cdf, array, position);
                 MenuUsualOperations(cdf, cdfs, nb_cdf);
                 break;
             case 2:
-                // Delete Column
-                printf("You chose to delete a column.\n");
+                printf("Enter position of the row:");
+                int pos;
+                scanf("%d", &pos);
+                delete_row_cdf(cdf, pos);
                 MenuUsualOperations(cdf, cdfs, nb_cdf);
                 break;
             case 3:
-                // Access and Replace Value
-                printf("You chose to access and replace a value.\n");
+                printf("Enter name of the column:");
+                char name[100];
+                scanf("%99s", name);
+                delete_column_cdf(cdf, name);
                 MenuUsualOperations(cdf, cdfs, nb_cdf);
                 break;
             case 4:
-                // Search Value
-                printf("You chose to search a value.\n");
+                printf("Enter new name of the column:");
+                char name2[100];
+                int pos2;
+                scanf("%99s", name);
+                printf("Enter the position of column to rename :");
+                scanf("%d", &pos2);
+                rename_column_cdf(cdf,pos2,name2);
                 MenuUsualOperations(cdf, cdfs, nb_cdf);
                 break;
             case 5:
+                printf("Enter the new value then the row and the col :");
+                int new_value, row, col;
+                scanf("%d", &new_value);
+                scanf("%d", &row);
+                scanf("%d", &col);
+                access_and_replace_value_by_pos(cdf, new_value, row, col);
+                MenuUsualOperations(cdf, cdfs, nb_cdf);
+                break;
+            case 6:
                 printf("Going back...\n");
                 MenuSection(cdf, cdfs, nb_cdf);
                 break;
             default:
-                printf("Invalid choice. Please enter a number between 1 and 5.\n");
+                printf("Invalid choice. Please enter a number between 1 and 6.\n");
         }
-    } while (choice < 1 || choice > 5);
+    } while (choice < 1 || choice > 6);
 }
 
 void MenuAnalysisStatistics(CDATAFRAME* cdf, list* cdfs, int nb_cdf) {
@@ -185,15 +217,14 @@ void MenuAnalysisStatistics(CDATAFRAME* cdf, list* cdfs, int nb_cdf) {
         printf(
                 "     #########################################################################\n"
                 "     #                   Analysis and Statistics Menu                         #\n"
-                "     #  CDataFrame selected : CDataFrame %d                                  #\n"
-                "     #                                                                       #\n"
-                "     #  1- Count Occurrences                                                 #\n"
-                "     #  2- Find Position of Value                                            #\n"
-                "     #  3- Find Values Greater Than                                          #\n"
-                "     #  4- Find Values Less Than                                             #\n"
-                "     #  5- Find Values Equal To                                              #\n"
-                "     #  6- Sort Column                                                       #\n"
-                "     #  7- Back                                                               #\n"
+                "     #  CDataFrame selected : CDataFrame %d                                   #\n"
+                "     #                                                                        #\n"
+                "     #  1- Display the number of rows                                         #\n"
+                "     #  2- Display the number of columns                                      #\n"
+                "     #  3- Display number of cells equal to x (x given as a parameter)        #\n"
+                "     #  4- Display number of cells containing a value greater than x          #\n"
+                "     #  5- Display number of cells containing a value less than x             #\n"
+                "     #  6- Back                                                               #\n"
                 "     #########################################################################\n", nb_cdf
         );
         printf("Enter your choice: ");
@@ -225,26 +256,163 @@ void MenuAnalysisStatistics(CDATAFRAME* cdf, list* cdfs, int nb_cdf) {
                 // Implement Find Values Equal To functionality
                 break;
             case 6:
-                // Sort Column
-                printf("You chose to sort a column.\n");
-                // Implement Sort Column functionality
-                break;
-            case 7:
                 printf("Going back...\n");
                 MenuSection(cdf, cdfs, nb_cdf);
                 break;
             default:
-                printf("Invalid choice. Please enter a number between 1 and 7.\n");
+                printf("Invalid choice. Please enter a number between 1 and 6.\n");
         }
-    } while (choice < 1 || choice > 7);
+    } while (choice < 1 || choice > 6);
 }
 
 void MenuOperationColumn(CDATAFRAME* cdf, list* cdfs, int nb_cdf){
-
+    int choice;
+    do {
+        printf(
+                "     #########################################################################\n"
+                "     #                   Operations on Columns Menu                           #\n"
+                "     #  CDataFrame selected : CDataFrame %d                                   #\n"
+                "     #                                                                        #\n"
+                "     #  1- Create a column                                                    #\n"
+                "     #  2- Insert a value in a column                                         #\n"
+                "     #  3- Insert a value in a column at a given position                     #\n"
+                "     #  4- Free the memory allocated to a column                              #\n"
+                "     #  5- Display the contents of a column                                   #\n"
+                "     #  6- Sort a column                                                      #\n"
+                "     #  7- Display the contents of a sorted column                            #\n"
+                "     #  8- Delete the index of a column                                       #\n"
+                "     #  9- Check if a column has an index                                     #\n"
+                "     #  10- Update an index                                                   #\n"
+                "     #  11- Back                                                              #\n"
+                "     #########################################################################\n", nb_cdf
+        );
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch(choice) {
+            case 1:
+                // Count Occurrences
+                printf("You chose to count occurrences.\n");
+                // Implement Count Occurrences functionality
+                break;
+            case 2:
+                // Find Position of Value
+                printf("You chose to find the position of a value.\n");
+                // Implement Find Position of Value functionality
+                break;
+            case 3:
+                // Find Values Greater Than
+                printf("You chose to find values greater than.\n");
+                // Implement Find Values Greater Than functionality
+                break;
+            case 4:
+                // Find Values Less Than
+                printf("You chose to find values less than.\n");
+                // Implement Find Values Less Than functionality
+                break;
+            case 5:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 6:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 7:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 8:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 9:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 10:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 11:
+                printf("Going back...\n");
+                MenuSection(cdf, cdfs, nb_cdf);
+                break;
+            default:
+                printf("Invalid choice. Please enter a number between 1 and 11.\n");
+        }
+    } while (choice < 1 || choice > 11);
 }
 
 void MenuSearching(CDATAFRAME* cdf, list* cdfs, int nb_cdf){
-
+    int choice;
+    do {
+        printf(
+                "     #########################################################################\n"
+                "     #                   Analysis and Statistics Menu                         #\n"
+                "     #  CDataFrame selected : CDataFrame %d                                   #\n"
+                "     #                                                                        #\n"
+                "     #  1- Return the number of occurrences of a value x                      #\n"
+                "     #  2- Return the value present at position x                             #\n"
+                "     #  3- Return the number of values greater than x                         #\n"
+                "     #  4- Return the number of values less than x                            #\n"
+                "     #  5- Return the number of values equal to x                             #\n"
+                "     #  6- Check for the existence of a value (search) in the CDataframe      #\n"
+                "     #  7- Perform a binary search in the CDataframe                          #\n"
+                "     #  8- Back                                                               #\n"
+                "     #########################################################################\n", nb_cdf
+        );
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch(choice) {
+            case 1:
+                // Count Occurrences
+                printf("You chose to count occurrences.\n");
+                // Implement Count Occurrences functionality
+                break;
+            case 2:
+                // Find Position of Value
+                printf("You chose to find the position of a value.\n");
+                // Implement Find Position of Value functionality
+                break;
+            case 3:
+                // Find Values Greater Than
+                printf("You chose to find values greater than.\n");
+                // Implement Find Values Greater Than functionality
+                break;
+            case 4:
+                // Find Values Less Than
+                printf("You chose to find values less than.\n");
+                // Implement Find Values Less Than functionality
+                break;
+            case 5:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 6:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 7:
+                // Find Values Equal To
+                printf("You chose to find values equal to.\n");
+                // Implement Find Values Equal To functionality
+                break;
+            case 8:
+                printf("Going back...\n");
+                MenuSection(cdf, cdfs, nb_cdf);
+                break;
+            default:
+                printf("Invalid choice. Please enter a number between 1 and 8.\n");
+        }
+    } while (choice < 1 || choice > 8);
 }
 
 void MenuSection(CDATAFRAME* cdf, list* cdfs, int nb_cdf) {

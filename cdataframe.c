@@ -179,6 +179,10 @@ int access_and_replace_value_by_pos(CDATAFRAME *cdf, int new_value, int row, int
 };
 
 void print_rows_cdf(CDATAFRAME *cdf, int start, int end){
+    if(start < 0 || end >= get_rows_number_cdf(cdf)){
+        printf("Error : Parameters not valid\n");
+        return;
+    }
     lnode* col_node;
     COLUMN* col;
     for (int j = start; j <= end; j++) {
@@ -198,10 +202,17 @@ void print_rows_cdf(CDATAFRAME *cdf, int start, int end){
 };
 
 void print_cols_cdf(CDATAFRAME *cdf, int start, int end) {
+    if(start < 0 || end > get_cols_number_cdf(cdf) - 1){
+        printf("Error : Parameters not valid\n");
+        return;
+    }
+    if (end == get_cols_number_cdf(cdf) - 1){
+        print_cdf(cdf);
+        return;
+    }
     COLUMN* col_list[end-start];
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col = col_node->data;
-    int number_rows = get_rows_number_cdf(cdf);
     for (int k = start; k <= end; k++){
         printf("[%d] ", k);
     };
@@ -215,7 +226,7 @@ void print_cols_cdf(CDATAFRAME *cdf, int start, int end) {
         col_node = get_next_node(cdf->list_cdf, col_node);
         col = col_node->data;
     };
-    for (int y = 0; y < number_rows; y++){
+    for (int y = 0; y < get_rows_number_cdf(cdf); y++){
         for (int j = 0; j <= end-start; j++) {
             printf(" %d ", col_list[j]->data[y]);
         };

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <column.h>
 #include <cdataframe.h>
 #include <double-linked-list.h>
 #include <menu.h>
@@ -11,6 +12,7 @@ int main(){
     CDATAFRAME* cdf = get_first_node(cdfs);
     int nb_cdf = -1;
     MenuSection(cdf, cdfs, nb_cdf);
+
 
     /*
     COLUMN *mycol = create_column("Column 0");
@@ -57,9 +59,12 @@ int main(){
     printf("%d", add_column_cdf(cdf, mycol5));
     printf("\n");
 
+    print_cdf(cdf);
+    printf("%d", get_rows_number_cdf(cdf));
+    printf("%d", get_cols_number_cdf(cdf));
+    print_rows_cdf(cdf, 0, 3);
+    print_cols_cdf(cdf, 0, 4);
 
-    print_rows_cdf(cdf, 2, 2);
-    print_cols_cdf(cdf, 1, 2);
     print_cdf(cdf);
     print_columns_title(cdf);
     rename_column_cdf(cdf, 2, "Testtt");
