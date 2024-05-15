@@ -38,12 +38,18 @@ void fill_user(CDATAFRAME *cdf) {
         insert_value(col, value);
     }
 
-    lst_insert_tail(cdf->list_cdf, lst_create_lnode(col));
+    add_column_cdf(cdf, col);
 }
 
-void fill_hard(CDATAFRAME *cdf, int size, char *title, int *values) {
-    if (!cdf || size <= 0 || !title || !values)
+void fill_hard(CDATAFRAME *cdf, int size, int *values) {
+    if (!cdf || !values)
         return; //si rien
+
+    char title[100];
+
+    printf("Enter the title of the column: ");
+    fgets(title, 100, stdin);
+    title[strcspn(title, "\n")] = 0;
 
     COLUMN *col = create_column(title); // créer la colonne
 
@@ -51,7 +57,7 @@ void fill_hard(CDATAFRAME *cdf, int size, char *title, int *values) {
         insert_value(col, values[i]); // insérer les valeurs normalement c'est bon
     }
 
-    lst_insert_tail(cdf->list_cdf, lst_create_lnode(col));
+    add_column_cdf(cdf, col);
 }
 
 

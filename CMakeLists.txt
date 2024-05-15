@@ -15,4 +15,8 @@ add_executable(CDataFrame
         cdataframe.h
         double-linked-list.c
         double-linked-list.h
-        main.h)
+        main.h
+        utils.c
+        utils.h
+        menu.h
+        menu.c)
