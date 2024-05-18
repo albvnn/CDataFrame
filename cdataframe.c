@@ -324,8 +324,8 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name){
         fprintf(f, "\n");
     };
 };
-void cells_equal(CDATAFRAME *cdf, int x)
-{
+
+void cells_equal(CDATAFRAME *cdf, int x) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
     int count;
@@ -338,8 +338,7 @@ void cells_equal(CDATAFRAME *cdf, int x)
     }
 }
 
-void cells_greater(CDATAFRAME *cdf, int x)
-{
+void cells_greater(CDATAFRAME *cdf, int x) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
     int count;
@@ -350,10 +349,9 @@ void cells_greater(CDATAFRAME *cdf, int x)
         printf("Column %d: Number of cells greater than %d: %d\n", i, x, count);
         col_node = get_next_node(cdf->list_cdf, col_node);
     }
-}
+};
 
-void cells_lesser(CDATAFRAME *cdf, int x)
-{
+void cells_lesser(CDATAFRAME *cdf, int x) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
     int count;

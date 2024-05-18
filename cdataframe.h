@@ -48,4 +48,10 @@ CDATAFRAME* load_from_csv(const char *file_name, int size_col);
 
 void save_into_csv(CDATAFRAME *cdf, char *file_name);
 
+void cells_equal(CDATAFRAME *cdf, int x);
+
+void cells_greater(CDATAFRAME *cdf, int x);
+
+void cells_lesser(CDATAFRAME *cdf, int x);
+
 #endif //CDATAFRAME_CDATAFRAME_H
