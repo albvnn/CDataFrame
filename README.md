@@ -23,7 +23,7 @@ cd projet-cdataframe
 ```
 3. Compile the source files using your C compiler:
 ```bash
-gcc main.c column.c cdataframe.c sort.c double-linked-list.c -o CDataFrame
+gcc main.c column.c cdataframe.c sort.c double-linked-list.c menu.c utils.c -o CDataFrame
 ```
 4. Run the generated executable:
 ```bash
