@@ -1,3 +1,10 @@
+/*
+ * Project: CDataFrame
+ * Authors: Alban Pascal and Maxime Colin
+ * Role: This file contains the menu functions for the CDataFrame Management System.
+ * It provides options for filling, displaying, and performing usual operations on the CDataFrame.
+ */
+
 #include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -78,6 +85,7 @@ void MenuFilling(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, list *col
                 char file_name2[200];
                 scanf("%199s", file_name2);
                 save_into_csv(cdf, file_name2);
+                printf("The csv file has been created, please stop the program to find it in your directory.\n");
                 MenuFilling(cdf, cdfs, nb_cdf, col, cols, nb_col);
             case 6:
                 printf("Going back...\n");
@@ -229,7 +237,8 @@ void MenuAnalysisStatistics(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col
                 "     #  3- Display number of cells equal to x (x given as a parameter)        #\n"
                 "     #  4- Display number of cells containing a value greater than x          #\n"
                 "     #  5- Display number of cells containing a value less than x             #\n"
-                "     #  6- Back                                                               #\n"
+                "     #  6- Search a value in the CDF and return its position if existing      #\n"
+                "     #  7- Back                                                               #\n"
                 "     #########################################################################\n", nb_cdf
         );
         printf("Enter your choice: ");
@@ -265,13 +274,20 @@ void MenuAnalysisStatistics(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col
                 MenuAnalysisStatistics(cdf, cdfs, nb_cdf, col, cols, nb_col);
                 break;
             case 6:
+                printf("Enter the value :");
+                int value4;
+                scanf("%d", &value4);
+                search_value_cdf(cdf, value4);
+                MenuAnalysisStatistics(cdf, cdfs, nb_cdf, col, cols, nb_col);
+                break;
+            case 7:
                 printf("Going back...\n");
                 MenuSection(cdf, cdfs, nb_cdf, col, cols, nb_col);
                 break;
             default:
-                printf("Invalid choice. Please enter a number between 1 and 6.\n");
+                printf("Invalid choice. Please enter a number between 1 and 7.\n");
         }
-    } while (choice < 1 || choice > 6);
+    } while (choice < 1 || choice > 7);
 }
 
 void MenuOperationColumn(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, list *cols, int nb_col){

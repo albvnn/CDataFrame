@@ -1,3 +1,11 @@
+/*
+ * Project: CDataFrame
+ * Authors: Alban Pascal and Maxime Colin
+ * Role: This file contains the implementation of the COLUMN structure and its associated functions.
+ *       It provides functionalities for creating, modifying, and managing columns within the CDataFrame,
+ *       including operations like inserting values, deleting values, sorting, and searching within columns.
+ */
+
 #include "column.h"
 #include "cdataframe.h"
 #include "sort.h"
@@ -7,6 +15,7 @@
 
 #define REALOC_SIZE 256
 
+//Creating an empty column
 COLUMN *create_column(char* title) {
     COLUMN* column = (COLUMN *)malloc(sizeof(COLUMN));
     strcpy(column->title, title); // copy title
@@ -19,6 +28,7 @@ COLUMN *create_column(char* title) {
     return column;
 };
 
+//Insert a value in a column
 int insert_value(COLUMN* col, int value){
     if (col->valid_index == 1)
         col->valid_index = -1;
@@ -41,6 +51,7 @@ int insert_value(COLUMN* col, int value){
     return 1;
 };
 
+//Insert a value in a column at a certain position
 int insert_value_at_position(COLUMN* col, int value, int position){
     int i;
     if (position == -1)
@@ -74,6 +85,7 @@ int insert_value_at_position(COLUMN* col, int value, int position){
     return 1;
 };
 
+//Delete a value from a column at a certain position
 int delete_value_at_position(COLUMN* col, int position){
     int i;
     if (position == -1)
@@ -90,6 +102,7 @@ int delete_value_at_position(COLUMN* col, int position){
     return 1;
 };
 
+//Delete and free the memory occuped by a column
 void delete_column(COLUMN **col){ // understand
     free((*col)->data);
     erase_index(*col);
@@ -97,6 +110,7 @@ void delete_column(COLUMN **col){ // understand
 
 };
 
+//Display a column with their elements and their positions
 void print_col(COLUMN* col){ // understand 
     for (int i = 0; i < col->TL; i++) {
         printf("[%d] %d", i, col->data[i]); // print every elem in a for loop
@@ -104,6 +118,7 @@ void print_col(COLUMN* col){ // understand
     }
 };
 
+//Count occurence of a certain value in a column
 int count_occ(COLUMN *col, int x) {
     if (!col)
         return 0;
@@ -116,6 +131,7 @@ int count_occ(COLUMN *col, int x) {
     return count; // return occ
 }
 
+//Return a value by its position in a column
 int positionval(COLUMN *col, int x) {
     if (!col || x < 0 || x >= col->TL)
         return -1; // meaning a error
@@ -123,6 +139,7 @@ int positionval(COLUMN *col, int x) {
     return col->data[x];
 }
 
+//Return the number of value greater than a value in a column
 int valuegreater(COLUMN *col, int x) { // no need to explain
     if (!col)
         return 0;
@@ -135,6 +152,7 @@ int valuegreater(COLUMN *col, int x) { // no need to explain
     return count;
 }
 
+//Return the number of value lesser than a value in a column
 int valueless(COLUMN *col, int x) { // same as value greater
     if (!col)
         return 0;
@@ -147,6 +165,7 @@ int valueless(COLUMN *col, int x) { // same as value greater
     return count;
 }
 
+//Return the number of value equal to a value in a column
 int valuequal(COLUMN *col, int x) { // same as the two previous one just sign = changing
     if (!col)
         return 0;
@@ -159,20 +178,24 @@ int valuequal(COLUMN *col, int x) { // same as the two previous one just sign = 
     return count;
 }
 
+//Free the memory of the index array
 void erase_index(COLUMN *col){
     free(col->index);
     col->index = NULL;
     col->valid_index = 0;
 }
 
+//Return the index of column
 int check_index(COLUMN *col){
     return col->valid_index;
 }
 
+//Update index of a column
 void update_index(COLUMN *col){
     sort(col, col->sort_dir);
 }
 
+//Sort a column according to its index
 void sort(COLUMN* col, int sort_dir){
     if (col->valid_index == 1) {
         printf("Column already sorted");
@@ -209,6 +232,7 @@ void sort(COLUMN* col, int sort_dir){
     }
 }
 
+//Display a column by the index array for see it sorted
 void print_col_by_index(COLUMN *col){
     for (int i = 0; i < col->TL; i++) {
         printf("[%d] %d | %lld", i, col->data[col->index[i]], col->index[i]); // print every elem in a for loop
@@ -216,8 +240,7 @@ void print_col_by_index(COLUMN *col){
     }
 }
 
-
-
+//Search a value in a column with dichotomic search
 int search_value_in_column(COLUMN *col, int val){
     if (col->valid_index == -1 || col->valid_index == 0 || col->sort_dir == 1) {
         printf("Column not sorted !");

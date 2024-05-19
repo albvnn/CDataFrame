@@ -1,8 +1,15 @@
+/*
+ * Project: CDataFrame
+ * Authors: Alban Pascal and Maxime Colin
+ * Role: This file contains utility functions for common operations used within the CDataFrame Management System.
+ */
+
 #include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+//Converts a string of digits into an array of integers.
 int* string_to_int_array(const char* str, int* size) {
     *size = strlen(str);
     int* array = (int*)malloc(*size * sizeof(int));

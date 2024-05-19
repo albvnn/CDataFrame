@@ -1,3 +1,11 @@
+/*
+ * Project: CDataFrame
+ * Authors: Alban Pascal and Maxime Colin
+ * Role: This file contains the implementation of the CDataFrame structure and its associated functions.
+ *       It provides functionalities for creating, modifying, and managing CDataFrames, including operations
+ *       like filling, deleting, and printing the data.
+ */
+
 #include "cdataframe.h"
 #include "column.h"
 #include "sort.h"
@@ -6,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-
+//Create an empty CDataFrame
 CDATAFRAME *create_cdataframe(int size){
     CDATAFRAME* cdf = (CDATAFRAME*)malloc(sizeof(CDATAFRAME));
     cdf->list_cdf = lst_create_list();
@@ -15,6 +23,7 @@ CDATAFRAME *create_cdataframe(int size){
     return cdf;
 };
 
+//Function for filling a CDataFrame according to user input
 void fill_user(CDATAFRAME *cdf) {
     if (!cdf)  //si rien
         return;
@@ -41,6 +50,7 @@ void fill_user(CDATAFRAME *cdf) {
     add_column_cdf(cdf, col);
 }
 
+//Filling a CDataFrame according to an array
 void fill_hard(CDATAFRAME *cdf, int size, int *values) {
     if (!cdf || !values)
         return; //si rien
@@ -60,13 +70,14 @@ void fill_hard(CDATAFRAME *cdf, int size, int *values) {
     add_column_cdf(cdf, col);
 }
 
-
+//Free the memory allocated to a CDataFrame
 void delete_cdf(CDATAFRAME **cdf){
     lst_erase((*cdf)->list_cdf);
     lst_delete_list((*cdf)->list_cdf);
     free(*cdf);
 };
 
+//Rename a certain column of a CDataFrame
 void rename_column_cdf(CDATAFRAME *cdf, int col_num, char new_title[]) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col = col_node->data;
@@ -78,6 +89,7 @@ void rename_column_cdf(CDATAFRAME *cdf, int col_num, char new_title[]) {
     strcpy(col->title, new_title);
 };
 
+//Add a column to a CDataFrame
 int add_column_cdf(CDATAFRAME *cdf, COLUMN *col){
     if(cdf->TL >= cdf->TP){
         printf("The CDataFrame is full !");
@@ -93,6 +105,7 @@ int add_column_cdf(CDATAFRAME *cdf, COLUMN *col){
     return 1;
 }
 
+//Delete a column of a CDataFrame
 void delete_column_cdf(CDATAFRAME *cdf, char *col_name){
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col = col_node->data;
@@ -104,7 +117,7 @@ void delete_column_cdf(CDATAFRAME *cdf, char *col_name){
     }
 };
 
-
+//Add a row to a CDataFrame
 int add_row_cdf(CDATAFRAME *cdf, int row[cdf->TL], int position) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
@@ -117,6 +130,7 @@ int add_row_cdf(CDATAFRAME *cdf, int row[cdf->TL], int position) {
     return 1;
 };
 
+//Delete a row of a CDataFrame
 int delete_row_cdf(CDATAFRAME *cdf, int position) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
@@ -130,16 +144,19 @@ int delete_row_cdf(CDATAFRAME *cdf, int position) {
     return 1;
 };
 
+//Get the number of columns in a CDataFrame
 int get_cols_number_cdf(CDATAFRAME *cdf){
     return cdf->TL;
 };
 
+//Get the number of rows in a CDataFrame
 int get_rows_number_cdf(CDATAFRAME *cdf){
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col = col_node->data;
     return col->TL;
 };
 
+//Return existence of a value in a CDataFrame
 void search_value_cdf(CDATAFRAME *cdf, int value){
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
@@ -161,6 +178,7 @@ void search_value_cdf(CDATAFRAME *cdf, int value){
     };
 };
 
+//Access and replace a value by its postion in a CDataFrame
 int access_and_replace_value_by_pos(CDATAFRAME *cdf, int new_value, int row, int column){
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col = col_node->data;
@@ -178,6 +196,7 @@ int access_and_replace_value_by_pos(CDATAFRAME *cdf, int new_value, int row, int
     };
 };
 
+//Display a certain part of rows of a CDataFrame
 void print_rows_cdf(CDATAFRAME *cdf, int start, int end){
     if(start < 0 || end >= get_rows_number_cdf(cdf)){
         printf("Error : Parameters not valid\n");
@@ -201,6 +220,7 @@ void print_rows_cdf(CDATAFRAME *cdf, int start, int end){
     };
 };
 
+//Display a certain part of columns of a CDataFrame
 void print_cols_cdf(CDATAFRAME *cdf, int start, int end) {
     if(start < 0 || end > get_cols_number_cdf(cdf) - 1){
         printf("Error : Parameters not valid\n");
@@ -234,6 +254,7 @@ void print_cols_cdf(CDATAFRAME *cdf, int start, int end) {
     };
 };
 
+//Display titles of the columns of a CDataFrame
 void print_columns_title(CDATAFRAME *cdf){
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col = col_node->data;
@@ -247,6 +268,7 @@ void print_columns_title(CDATAFRAME *cdf){
     };
 };
 
+//Display the entire CDataFrame
 void print_cdf(CDATAFRAME *cdf){
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col = col_node->data;
@@ -258,6 +280,7 @@ void print_cdf(CDATAFRAME *cdf){
     print_rows_cdf(cdf, 0, col->TL - 1);
 };
 
+//Load a CSV file into a CDataFrame
 CDATAFRAME* load_from_csv(const char *file_name, int size_col){
     FILE* f = fopen(file_name, "r");
     char line[1000];
@@ -299,6 +322,7 @@ CDATAFRAME* load_from_csv(const char *file_name, int size_col){
     return cdf;
 };
 
+//Export a CDataFrame into a csv file
 void save_into_csv(CDATAFRAME *cdf, char *file_name){
     FILE* f = fopen(file_name, "w+");
     int nb_row = get_rows_number_cdf(cdf);
@@ -325,6 +349,7 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name){
     };
 };
 
+//Return the number of cells equal to a value in a CDataFrame
 void cells_equal(CDATAFRAME *cdf, int x) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
@@ -338,6 +363,7 @@ void cells_equal(CDATAFRAME *cdf, int x) {
     }
 }
 
+//Return the number of cells greater than a value in a CDataFrame
 void cells_greater(CDATAFRAME *cdf, int x) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;
@@ -351,6 +377,7 @@ void cells_greater(CDATAFRAME *cdf, int x) {
     }
 };
 
+//Return the number of cells lesser than value in a CDataFrame
 void cells_lesser(CDATAFRAME *cdf, int x) {
     lnode* col_node = get_first_node(cdf->list_cdf);
     COLUMN* col;

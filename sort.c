@@ -1,8 +1,16 @@
+/*
+ * Project: CDataFrame
+ * Authors: Alban Pascal and Maxime Colin
+ * Role: This file contains the implementation of sorting algorithms and related utility functions
+ *       for sorting and searching operations within columns of the CDataFrame.
+ */
+
 #include "sort.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
+//Function of the insertion sort
 void insertionSort(int tab[], long long *index, int N) {
     int i, j, k;
     long long temp;
@@ -20,18 +28,21 @@ void insertionSort(int tab[], long long *index, int N) {
     }
 }
 
+//Function swaping to integer value
 void swapint(int* a, int* b) {
     int t = *a;
     *a = *b;
     *b = t;
 }
 
+//Function swaping to long value
 void swaplong(long long* a, long long* b) {
     long long t = *a;
     *a = *b;
     *b = t;
 }
 
+//Function to apply partition algorithm
 int partition(int tab[], long long *index, int left, int right) {
     int pivot = tab[right];
     int i = left - 1;
@@ -48,6 +59,7 @@ int partition(int tab[], long long *index, int left, int right) {
     return i + 1;
 }
 
+//Function of QuickSort
 void quickSort(int tab[], long long *index, int left, int right) {
     if (left < right) {
         int pi = partition(tab, index, left, right);
