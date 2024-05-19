@@ -12,7 +12,7 @@ int main(){
     CDATAFRAME* cdf = get_first_node(cdfs);
     int nb_cdf = -1;
     list* cols = lst_create_list();
-    CDATAFRAME* col = get_first_node(cdfs);
+    COLUMN * col = get_first_node(cdfs);
     int nb_col = -1;
     MenuSection(cdf, cdfs, nb_cdf, col, cols, nb_col);
 

@@ -44,6 +44,7 @@ void MenuFilling(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, list *col
                     nb_cdf = 1;
                 else
                     nb_cdf++;
+                cdf = new_cdf;
                 MenuFilling(cdf, cdfs, nb_cdf, col, cols, nb_col);
                 break;
             case 2:
@@ -279,7 +280,7 @@ void MenuOperationColumn(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, l
         printf(
                 "     #########################################################################\n"
                 "     #                   Operations on Columns Menu                           #\n"
-                "     #  Column selected : Column %d                                           #\n"
+                "     #  Column selected : Column %d - %s                                      #\n"
                 "     #                                                                        #\n"
                 "     #  1- Create a column                                                    #\n"
                 "     #  2- Insert a value in a column                                         #\n"
@@ -292,7 +293,7 @@ void MenuOperationColumn(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, l
                 "     #  9- Check if a column has an index                                     #\n"
                 "     #  10- Update an index                                                   #\n"
                 "     #  11- Back                                                              #\n"
-                "     #########################################################################\n", nb_col
+                "     #########################################################################\n", nb_col, col->title
         );
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -373,7 +374,7 @@ void MenuSearching(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, list *c
         printf(
                 "     #########################################################################\n"
                 "     #                   Searching Menu                                       #\n"
-                "     #  Column selected : Column %d                                           #\n"
+                "     #  Column selected : Column %d - %s                                      #\n"
                 "     #                                                                        #\n"
                 "     #  1- Return the number of occurrences of a value x in a column          #\n"
                 "     #  2- Return the value present at position x in a column                 #\n"
@@ -382,7 +383,7 @@ void MenuSearching(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, list *c
                 "     #  5- Return the number of values equal to x in a column                 #\n"
                 "     #  6- Perform a binary search in a column                                #\n"
                 "     #  7- Back                                                               #\n"
-                "     #########################################################################\n", nb_col
+                "     #########################################################################\n", nb_col, col->title
         );
         printf("Enter your choice: ");
         scanf("%d", &choice);

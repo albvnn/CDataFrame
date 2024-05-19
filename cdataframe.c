@@ -37,7 +37,7 @@ void fill_user(CDATAFRAME *cdf) {
         scanf("%d", &value);
         insert_value(col, value);
     }
-
+    printf("\n");
     add_column_cdf(cdf, col);
 }
 
