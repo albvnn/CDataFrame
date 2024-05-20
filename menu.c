@@ -74,10 +74,15 @@ void MenuFilling(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, list *col
                 char file_name[200];
                 scanf("%199s", file_name);
                 printf("Enter the number of column of your csv file :");
-                int nb_col = 0;
-                scanf("%d", &nb_col);
-                CDATAFRAME* cdf_csv = load_from_csv(file_name, nb_col);
+                int nbr_col = 0;
+                scanf("%d", &nbr_col);
+                CDATAFRAME* cdf_csv = load_from_csv(file_name, nbr_col);
                 lst_insert_tail(cdfs, lst_create_lnode(cdf_csv));
+                if (nb_cdf == -1)
+                    nb_cdf = 1;
+                else
+                    nb_cdf++;
+                cdf = cdf_csv;
                 MenuFilling(cdf, cdfs, nb_cdf, col, cols, nb_col);
                 break;
             case 5:
@@ -546,21 +551,21 @@ void MenuSection(CDATAFRAME *cdf, list *cdfs, int nb_cdf, COLUMN *col, list *col
                 break;
             case 8:
                 if (cols->head == NULL){
-                    printf("There is no CDataFrame created, please go to the Section 1 - Creation and Filling\n");
+                    printf("There is no Column created, please go to the Section 5 - Operations on Column\n");
                     MenuSection(cdf, cdfs, nb_cdf, col, cols, nb_col);
                 } else {
                     lnode* col_choice = get_first_node(cols);
                     int number_col = -1;
                     int i = 1;
-                    printf("List of CDataFrame\n");
-                    printf("%d - CDataFrame %d\n", 1, 1);
+                    printf("List of Columns\n");
+                    printf("%d - Column %d\n", 1, 1);
                     while (col_choice != cdfs->tail){
                         i++;
-                        printf("%d - CDataFrame %d\n", i, i);
+                        printf("%d - Column %d\n", i, i);
                         col_choice = get_next_node(cols, col_choice);
                     }
                     do{
-                        printf("Enter the number of the CDataFrame :");
+                        printf("Enter the number of the Column :");
                         scanf("%d", &number_col);
                         if (number_col < 1 || number_col > i){
                             printf("Invalid choice! Please enter a number between 1 and %d.\n", i);

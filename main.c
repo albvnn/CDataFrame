@@ -26,7 +26,7 @@ int main() {
     list* cols = lst_create_list();
 
     // Get the first Column in the list (currently none, so it's NULL)
-    COLUMN * col = get_first_node(cdfs);
+    COLUMN * col = get_first_node(cols);
 
     // Initialize the counter for the number of Columns
     int nb_col = -1;
