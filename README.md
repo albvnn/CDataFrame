@@ -88,7 +88,7 @@ Then follow the on-screen instructions to interact with the library and use its 
 - **Manage Multiple CDataframes and Columns**: Create and manage multiple CDataframes and Columns simultaneously. Select the CDataframe or Column you wish to modify, providing flexibility and control over your data management tasks.
 
 ## Contributions and Remarks
-This project was developed by Alban Pascal and Maxime Colin. We welcome contributions, improvement suggestions, and remarks. If you wish to contribute to the project or report an issue, please open a new issue on GitHub.
+This project was developed by Alban P and Maxime Colin. We welcome contributions, improvement suggestions, and remarks. If you wish to contribute to the project or report an issue, please open a new issue on GitHub.
 
 Note: This library is intended for educational and development purposes and is not affiliated with any real data manipulation projects.
 
